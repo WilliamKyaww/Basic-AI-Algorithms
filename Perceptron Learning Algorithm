@@ -1,15 +1,25 @@
-x1 = 1
-x2 = 2
-x3 = 2
-class_value = 1
-
 def learning_algorithm(x1, x2, x3, class_value):
     w0, w1, w2, w3 = 0, 0, 0, 0
     dotProduct = w0 + (w1*x1) + (w2*x2) + (w3*x3)
     if class_value == 1:
-        if class_value < 1:
-            pass
-    else:
-        pass
+        if dotProduct < 1:
+            w0 = w0 + class_value
+            w1 = w1 + (class_value * x1)
+            w2 = w2 + (class_value * x2)
+            w3 = w3 + (class_value * x3)
+            return False
+        else:
+            return True
+    elif class_value == -1:
+        if dotProduct > -1:
+            w0 = w0 + class_value
+            w1 = w1 + (class_value * x1)
+            w2 = w2 + (class_value * x2)
+            w3 = w3 + (class_value * x3)
+            return False
+        else:
+            return True
 
-    return 
+
+x1, x2, x3, class_value = 1.7, 1, 4, -1
+print(learning_algorithm(x1, x2, x3, class_value)) 
