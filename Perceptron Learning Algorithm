@@ -11,7 +11,7 @@ def learning_algorithm(x1, x2, x3, class_value):
                 w3 = w3 + (class_value * x3)
                 classification = False
             else:
-                print(f"w.x = {w0} + ({w1})x1 + ({w2})x2 + ({w3})x3")
+                # print(f"w.x = {w0} + ({w1})x1 + ({w2})x2 + ({w3})x3")
                 classification = True
         elif class_value == -1:
             if dotProduct > -1:
@@ -21,11 +21,17 @@ def learning_algorithm(x1, x2, x3, class_value):
                 w3 = w3 + (class_value * x3)
                 classification = False
             else:
-                print(f"w.x = {w0} + ({w1})x1 + ({w2})x2 + ({w3})x3")
+                # print(f"w.x = {w0} + ({w1})x1 + ({w2})x2 + ({w3})x3")
                 classification = True
         else:
             classification = False
+    return (f"w.x = {w0} + ({w1})x1 + ({w2})x2 + ({w3})x3")
+            
+
 
 
 x1, x2, x3, class_value = 1.7, 1, 4, -1
+print(learning_algorithm(x1, x2, x3, class_value)) 
+
+x1, x2, x3, class_value = 5.5, 2, 9, 1
 print(learning_algorithm(x1, x2, x3, class_value)) 
