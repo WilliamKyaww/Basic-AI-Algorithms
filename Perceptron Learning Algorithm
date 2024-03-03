@@ -7,7 +7,7 @@ E5 = [1.4, 6, 0.7, -1]
 E6 = [4.2, 1, 1.5, -1]
 E_list = [E1, E2, E3, E4, E5, E6]
 
-# Adjusted Learning Algorithm Function to take and return weights
+# Learning Algorithm Function 
 def learning_algorithm(x1, x2, x3, class_value, w0, w1, w2, w3):
     classification = False
     while not classification:
@@ -29,11 +29,19 @@ def learning_algorithm(x1, x2, x3, class_value, w0, w1, w2, w3):
 # Initial weights
 w0, w1, w2, w3 = 0, 0, 0, 0
 
-# Iterate
-# Iterate for 10 overall iterations
-total_iterations = 10
-for iteration in range(total_iterations):
+# Iterate until weights become stable
+weights_changed = True
+iteration = 0
+while weights_changed:
+    weights_before = [w0, w1, w2, w3]
     for i, E in enumerate(E_list):
         x1, x2, x3, class_value = E[0], E[1], E[2], E[3]
         w0, w1, w2, w3, equation = learning_algorithm(x1, x2, x3, class_value, w0, w1, w2, w3)
         print(f"Iteration {iteration + 1}, Row {i+1}: {equation}")
+    weights_after = [w0, w1, w2, w3]
+    
+    if weights_before == weights_after:
+        weights_changed = False
+    iteration += 1
+
+print("\nWeights have stabilised.")
