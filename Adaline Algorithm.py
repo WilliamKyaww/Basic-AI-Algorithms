@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 # Data
 E1 = [1, 4, -1]
@@ -10,8 +10,9 @@ E5 = [6, 0.7, -1]
 E6 = [1, 1.5, -1]
 E_list = [E1, E2, E3, E4, E5, E6]
 
+# Adaline -----------------------------------------------------------------------------------------------------------------
 
-
+print("Adaline learning algorithm:")
 
 # Adaline Learning Algorithm Function 
 def adaline_learning_algorithm(learning_rate, x1, x2, class_value, w0, w1, w2):
@@ -23,7 +24,7 @@ def adaline_learning_algorithm(learning_rate, x1, x2, class_value, w0, w1, w2):
 
     return w0, w1, w2, f"w.x = {w0} + ({w1})x1 + ({w2})x2"
 
-# Initial weights
+# Initialise weights
 w0, w1, w2 = 1, 2, 3
 
 # Initialise learning rate
@@ -36,31 +37,45 @@ while weights_changed:
     weights_before = [w0, w1, w2]
     for i, E in enumerate(E_list):
         x1, x2, class_value = E[0], E[1], E[2]
-        w0, w1, w2, equation = adaline_learning_algorithm(x1, x2, class_value, w0, w1, w2)
+        w0, w1, w2, equation = adaline_learning_algorithm(learning_rate, x1, x2, class_value, w0, w1, w2)
         print(f"Iteration {iteration + 1}, Row {i+1}: {equation}")
     weights_after = [w0, w1, w2]
     
     if weights_before == weights_after:
         weights_changed = False
-    iteration += 1
+    else:
+        iteration += 1
 
-print("\nWeights have stabilised.")
+print("Weights have stabilised.\n")
 
+# Adaline Plot -----------------------------------------------------------------------------------------------------------------
 
+print("Perceptron learning algorithm:")
 
+# Get x and y values
+x_values = [E[1] for E in E_list]
+y_values = [E[0] for E in E_list]
 
+final_w0, final_w1, final_w2 = w0, w1, w2
 
+# Prepare dataset for plotting
+class_1_x1 = [E[0] for E in E_list if E[2] == 1]
+class_1_x2 = [E[1] for E in E_list if E[2] == 1]
+class_minus_1_x1 = [E[0] for E in E_list if E[2] == -1]
+class_minus_1_x2 = [E[1] for E in E_list if E[2] == -1]
 
+# Plot data points
+plt.scatter(class_1_x1, class_1_x2, color='blue', label='Class +1')
+plt.scatter(class_minus_1_x1, class_minus_1_x2, color='red', label='Class -1')
 
+# Calculate and plot the decision boundary: w0 + w1*x1 + w2*x2 = 0 -> x2 = (-w0 - w1*x1) / w2
+x1_values = np.linspace(min(x_values), max(x_values), 100)
+x2_values = (-final_w0 - final_w1*x1_values) / final_w2
+plt.plot(x1_values, x2_values, 'g--', label='Adaline Decision Boundary')
 
+# Perceptron -----------------------------------------------------------------------------------------------------------------
 
-
-
-
-
-
-
-# Perceptron Learning Algorithm Function 
+# Perceptron learning algorithm function 
 def perceptron_learning_algorithm(x1, x2, class_value, w0, w1, w2):
     classification = False
     while not classification:
@@ -95,39 +110,24 @@ while weights_changed:
         weights_changed = False
     iteration += 1
 
-print("\nWeights have stabilised.")
+print("Weights have stabilised.")
 
-x_values = [list[1] for list in [E1, E2, E3, E4, E5, E6]]
-y_values = [list[0] for list in [E1, E2, E3, E4, E5, E6]]
+# Perceptron Plot -----------------------------------------------------------------------------------------------------------------
 
-import numpy as np
-
-# Assuming the final weights after training
 final_w0, final_w1, final_w2 = w0, w1, w2
 
-# Prepare the dataset for plotting
-class_1_x1 = [E[0] for E in E_list if E[2] == 1]
-class_1_x2 = [E[1] for E in E_list if E[2] == 1]
-class_minus_1_x1 = [E[0] for E in E_list if E[2] == -1]
-class_minus_1_x2 = [E[1] for E in E_list if E[2] == -1]
-
-# Plot the data points
-plt.scatter(class_1_x1, class_1_x2, color='blue', label='Class +1')
-plt.scatter(class_minus_1_x1, class_minus_1_x2, color='red', label='Class -1')
-
-# Calculate and plot the decision boundary
-# The decision boundary is where w0 + w1*x1 + w2*x2 = 0
-# Solving for x2 gives x2 = (-w0 - w1*x1) / w2
+# Calculate and plot the decision boundary: w0 + w1*x1 + w2*x2 = 0 -> x2 = (-w0 - w1*x1) / w2
 x1_values = np.linspace(min(x_values), max(x_values), 100)
 x2_values = (-final_w0 - final_w1*x1_values) / final_w2
-plt.plot(x1_values, x2_values, 'g--', label='Decision Boundary')
+plt.plot(x1_values, x2_values, 'b--', label='Perceptron Decision Boundary')
 
 plt.xlabel('x₁')
 plt.ylabel('x₂')
-plt.title('Perceptron Learning Algorithm - Decision Boundary')
+plt.title('Learning Algorithms - Decision Boundary')
 plt.legend()
 plt.grid(True)
 plt.show()
+
 
 
 
